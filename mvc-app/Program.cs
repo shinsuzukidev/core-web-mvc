@@ -1,3 +1,9 @@
+﻿using mvc_app.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using mvc_app.Data;
+using mvc_app.Models;
+
 namespace mvc_app
 {
     public class Program
@@ -5,13 +11,29 @@ namespace mvc_app
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<mvc_appContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("mvc_appContext") ?? throw new InvalidOperationException("Connection string 'mvc_appContext' not found.")));
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            //----------------------------------------
+            builder.Services.ConfigMvc();   // mvcの設定
+
+
+
+
 
             var app = builder.Build();
 
+            // db初期化
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                SeedData.Initialize(services);
+            }
+
+
             // Configure the HTTP request pipeline.
+            //----------------------------------------
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
