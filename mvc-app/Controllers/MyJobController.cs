@@ -2,11 +2,21 @@
 using mvc_app.Models.MyJob.RequestModel;
 using mvc_app.Models.MyJob.ViewModels;
 using System.ComponentModel;
+using System.Net;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace mvc_app.Controllers
 {
     public class MyJobController : Controller
     {
+        [NonAction]
+        public string NoIndex()
+        {
+            // NonAction属性によりアクションから無視される 
+            return "hello world!";
+        }
+
         public IActionResult Index()
         {
             // ビューに渡せる。ViewDataも同様
@@ -47,5 +57,41 @@ namespace mvc_app.Controllers
             });
         }
 
+        public IActionResult FakeApi()
+        {
+            // mvc画面からjsonを返す
+            return new JsonResult(
+                new 
+                {
+                    Name = "sato",
+                    Age= 30
+                },
+                new JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+# if DEBUG
+                    WriteIndented = true,
+# endif
+                });
+        }
+
+        public IActionResult ReturnOk()
+        {
+            return Ok("return ok!");
+        }
+        public IActionResult ReturnBadRequest()
+        {
+            return BadRequest("return 404 error!");
+        }
+
+        public RedirectToActionResult RedirectHomeIndex()
+        {
+            return RedirectToAction(actionName:"Index", controllerName:"Home");
+        }
+
+        public RedirectToActionResult RedirectMyjobIndex()
+        {
+            return RedirectToAction("Index");
+        }
     }
 }
