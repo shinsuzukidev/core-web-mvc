@@ -1,39 +1,54 @@
 ﻿@{
-    Layout = null;
     ViewData["Title"] = "MyJobIndex";
 }
 
-<html>
-    <head>
-        <title>mvcapp - @ViewData["Title"]</title>
-    </head>
-    <body>
-        <h1>@ViewData["Title"] Page</h1>
+<h1>@ViewData["Title"] Page</h1>
+<hr />
 
+<div>
+    <!-- ________________________________________ link -->
+    <p class="badge bg-primary text-wrap fs-5 p-md-2">Linkビュー</p>
+    <p>
         <a asp-controller="Myjob" asp-action="InputAddressForm">InputAddressForm</a>
+    </p>
 
 
-        <hr />
-        <div>
-            <p>message: @ViewData["Message"]</p>
-            <p>name: @ViewBag.Name</p>
-        </div>
-        <div>
-            <ul>
-                @* Razor loop *@
-                @for (int i = 0; i < 3; i++)
+
+    <!-- ________________________________________ 部分ビュー-->
+    <p class="badge bg-primary text-wrap fs-5 p-md-2">部分ビュー</p>
+
+    <!-- タグヘルパーパラメータなし -->
+    <partial name="_pv_AddressDetail_0" />
+
+    <!-- htmlヘルパー、stringパラメータを渡す-->
+    @await Html.PartialAsync("_pv_AddressDetail_1", "tokyo")
+
+    <!-- htmlヘルパー、modelパラメータを渡す-->
+    @await Html.PartialAsync("_pv_AddressDetail_2", new mvc_app.Models.MyJob.Partial.pv_AddressDetailModel
+    {
+        StreetAddress = "1-2-3"
+    })
+
+    <hr />
+    <!-- ________________________________________ 他、ViewData,ViewBag,loop -->
+    <div>
+        <p>message: @ViewData["Message"]</p>
+        <p>name: @ViewBag.Name</p>
+    </div>
+    <div>
+        <ul>
+            @* Razor loop *@
+            @for (int i = 0; i < 3; i++)
+            {
+                @if (i == 1)
                 {
-                    @if (i == 1)
-                    {
-                        <li>item_@i (★)</li>
-                    } else
-                    {
-                        <li>item_@i</li>
-                    }
+                    <li>item_@i (★)</li>
                 }
-            </ul>
-        </div>
-
-
-    </body>
-</html>
+                else
+                {
+                    <li>item_@i</li>
+                }
+            }
+        </ul>
+    </div>
+</div>
