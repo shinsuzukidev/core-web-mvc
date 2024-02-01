@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mvc_app.Data;
 
@@ -11,9 +12,10 @@ using mvc_app.Data;
 namespace mvc_app.Migrations
 {
     [DbContext(typeof(mvc_appContext))]
-    partial class mvc_appContextModelSnapshot : ModelSnapshot
+    [Migration("20240201063541_rating")]
+    partial class rating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
