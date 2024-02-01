@@ -11,11 +11,13 @@ namespace mvc_app
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<mvc_appContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("mvc_appContext") ?? throw new InvalidOperationException("Connection string 'mvc_appContext' not found.")));
 
             // Add services to the container.
             //----------------------------------------
+            // 
+            builder.Services.AddDbContext<mvc_appContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("mvc_appContext") ?? throw new InvalidOperationException("Connection string 'mvc_appContext' not found.")));
+
             builder.Services.ConfigMvc();   // mvcの設定
 
 

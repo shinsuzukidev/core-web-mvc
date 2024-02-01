@@ -3,14 +3,17 @@
     ViewData["Title"] = "MyJobIndex";
 }
 
-
 <html>
-
     <head>
-    <title>mvcapp - @ViewData["Title"]</title>
+        <title>mvcapp - @ViewData["Title"]</title>
     </head>
     <body>
         <h1>@ViewData["Title"] Page</h1>
+
+        <a asp-controller="Myjob" asp-action="InputAddressForm">InputAddressForm</a>
+
+
+        <hr />
         <div>
             <p>message: @ViewData["Message"]</p>
             <p>name: @ViewBag.Name</p>

@@ -1,0 +1,12 @@
+﻿####
+GET https://localhost:7048/Myjob/Address?address=tokyo
+
+####
+POST https://localhost:7048/Myjob/AddressPost
+Content-Type: application/json
+
+{
+    "City": "tokyo",
+    "State": "shinjuku",
+    "PostCode": "12345"
+}
