@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using mvc_app.Data;
 using mvc_app.Models;
+using mvc_app.Sample.Utils;
+using mvc_app.Sample.Config;
+using System.Configuration;
 
 namespace mvc_app
 {
@@ -18,10 +21,11 @@ namespace mvc_app
             builder.Services.AddDbContext<mvc_appContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("mvc_appContext") ?? throw new InvalidOperationException("Connection string 'mvc_appContext' not found.")));
 
-            builder.Services.ConfigMvc();   // mvcの設定
+            builder.Services.ConfigureSettings();  // 設定ファイル  
+            builder.Services.ConfigureMvc();   // mvcの設定
 
-
-
+            // DI
+            builder.Services.AddSingleton<IDateTime, SystemDateTime>();
 
 
             var app = builder.Build();
@@ -50,11 +54,9 @@ namespace mvc_app
 
             app.UseAuthorization();
 
-            // 属性ルーティングへ変更
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapControllers();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

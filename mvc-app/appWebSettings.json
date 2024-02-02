@@ -1,0 +1,7 @@
+{
+  "Name": "TestApp",
+  "DatabaseSettings": {
+    "Host": "myhost",
+    "Port": 9999
+  }
+}
