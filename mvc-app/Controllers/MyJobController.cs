@@ -57,7 +57,12 @@ namespace mvc_app.Controllers
             System.Diagnostics.Debug.WriteLine("name: " + _configuration["UserSettings:DefaultUser:Name"]);
 
             // todo DIの調査が必要
-            var p = new Person("sato", _configuration);
+            var p = new Person("sato");
+
+            // 
+            System.Diagnostics.Debug.WriteLine("setting: "+ AppSetting.Instance.GetValue<string>("UserSettings:DefaultUser:Name"));
+
+
 
             // 名前を付けるとViews/{controller}/{名前}.cshatml
             // 名前を付けないとViews/{controller}/{action}.cshtml

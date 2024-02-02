@@ -1,4 +1,6 @@
-﻿namespace mvc_app.Sample.Other
+﻿using mvc_app.Sample.Utils;
+
+namespace mvc_app.Sample.Other
 {
     public class Person
     {
@@ -7,12 +9,10 @@
 
         public string Name { get => _name; set => _name = value; }
 
-        public Person(string name, IConfiguration configuration)
+        public Person(string name)
         {
             _name = name;
-
-            _configuration = configuration;
-            var defaultUserName = _configuration["UserSettings:DefaultUser:Name"];
+            var defaultUserName = AppSetting.Instance.GetValue<string>("UserSettings:DefaultUser:Name");
         }
     }
 }

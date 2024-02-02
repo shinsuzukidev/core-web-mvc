@@ -28,6 +28,9 @@ namespace mvc_app
             builder.Services.AddSingleton<IDateTime, SystemDateTime>();
 
 
+            // 設定をどこからでも呼べるようにした
+            AppSetting.Instance = builder.Configuration;   
+
             var app = builder.Build();
 
             // db初期化
