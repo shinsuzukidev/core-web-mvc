@@ -10,6 +10,7 @@ using mvc_app.Models;
 
 namespace mvc_app.Controllers
 {
+    [Route("[controller]/[action]")]
     public class MoviesController : Controller
     {
         private readonly mvc_appContext _context;
@@ -20,6 +21,9 @@ namespace mvc_app.Controllers
         }
 
         // GET: Movies
+        [Route("/[controller]")]
+        [HttpGet]
+        [ActionName("Index")]
         public async Task<IActionResult> Index(string movieGenre, string searchString)
         {
             IQueryable<string> genreQuery = from m in _context.Movie orderby m.Genre select m.Genre;
@@ -45,6 +49,8 @@ namespace mvc_app.Controllers
         }
 
         // GET: Movies/Details/5
+        [HttpGet]
+        [ActionName("Details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Movie == null)
@@ -63,6 +69,8 @@ namespace mvc_app.Controllers
         }
 
         // GET: Movies/Create
+        [HttpGet]
+        [ActionName("Create")]
         public IActionResult Create()
         {
             return View();
@@ -72,6 +80,7 @@ namespace mvc_app.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ActionName("Create")]
         // [ValidateAntiForgeryToken]  // CSRF対策は AutoValidateAntiforgeryTokenAttributeをグローバル設定したため不要
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
@@ -85,7 +94,9 @@ namespace mvc_app.Controllers
         }
 
         // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        [ActionName("Edit")]
+        public async Task<IActionResult> EditDisplay(int? id)
         {
             if (id == null || _context.Movie == null)
             {
@@ -104,6 +115,7 @@ namespace mvc_app.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ActionName("Edit")]
         // [ValidateAntiForgeryToken] CSRF対策は AutoValidateAntiforgeryTokenAttributeをグローバル設定したため不要
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
@@ -136,7 +148,9 @@ namespace mvc_app.Controllers
         }
 
         // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteDisplay(int? id)
         {
             if (id == null || _context.Movie == null)
             {
@@ -154,7 +168,8 @@ namespace mvc_app.Controllers
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         // [ValidateAntiForgeryToken] CSRF対策は AutoValidateAntiforgeryTokenAttributeをグローバル設定したため不要
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -172,6 +187,8 @@ namespace mvc_app.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        [ActionName("MovieExists")]
         private bool MovieExists(int id)
         {
           return (_context.Movie?.Any(e => e.Id == id)).GetValueOrDefault();

@@ -8,6 +8,7 @@ using System.Text.Json;
 
 namespace mvc_app.Controllers
 {
+    [Route("[controller]/[action]")]
     public class MyJobController : Controller
     {
         [NonAction]
@@ -17,6 +18,9 @@ namespace mvc_app.Controllers
             return "hello world!";
         }
 
+        [HttpGet]
+        [Route("/[controller]")]
+        [ActionName("Index")]
         public IActionResult Index()
         {
             // ビューに渡せる。ViewDataも同様
@@ -28,14 +32,15 @@ namespace mvc_app.Controllers
             return View("Index");   
         }
 
-
-        [HttpGet, ActionName("InputAddressForm")]
+        [HttpGet]
+        [ActionName("InputAddressForm")]
         public IActionResult InputAddressForm()
         {
             return View("InputAddressForm");
         }
 
-        [HttpGet, ActionName("AddressGet")]
+        [HttpGet]
+        [ActionName("AddressGet")]
         public IActionResult Address(string address)
         {
             System.Diagnostics.Debug.WriteLine(address);
@@ -43,7 +48,8 @@ namespace mvc_app.Controllers
         }
 
 
-        [HttpPost, ActionName("AddressPost")]
+        [HttpPost]
+        [ActionName("AddressPost")]
         public IActionResult Address(AddressRequestModel req)
         {
             // todo biz で何らかの処理後にViewModelを作成
@@ -57,6 +63,8 @@ namespace mvc_app.Controllers
             });
         }
 
+        [HttpGet]
+        [ActionName("FakeApi")]
         public IActionResult FakeApi()
         {
             // mvc画面からjsonを返す
@@ -75,20 +83,29 @@ namespace mvc_app.Controllers
                 });
         }
 
+        [HttpGet]
+        [ActionName("ReturnOk")]
         public IActionResult ReturnOk()
         {
             return Ok("return ok!");
         }
+
+        [HttpGet]
+        [ActionName("ReturnBadRequest")]
         public IActionResult ReturnBadRequest()
         {
             return BadRequest("return 404 error!");
         }
 
+        [HttpGet]
+        [ActionName("RedirectHomeIndex")]
         public RedirectToActionResult RedirectHomeIndex()
         {
             return RedirectToAction(actionName:"Index", controllerName:"Home");
         }
 
+        [HttpGet]
+        [ActionName("RedirectMyjobIndex")]
         public RedirectToActionResult RedirectMyjobIndex()
         {
             return RedirectToAction("Index");
