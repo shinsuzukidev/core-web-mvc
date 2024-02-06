@@ -1,0 +1,32 @@
+﻿@model mvc_app.Models.TagHelper.RegisterViewModel
+
+@{
+    ViewData["Title"] = "MyPostMessage";
+
+    var testData = TempData["TestDaTa"];
+    System.Diagnostics.Debug.WriteLine(testData.ToString());
+
+    // var req = Context.Request;
+    // System.Diagnostics.Debug.WriteLine(req);
+
+}
+
+<h1>@ViewData["Title"] Page</h1>
+<hr />
+
+
+<ul class="list-group">
+    <li class="list-group-item">Name: @Model.Name</li>
+    <li class="list-group-item">Email: @Model.Email</li>
+    <li class="list-group-item">Password: @Model.Password</li>
+    <li class="list-group-item">IsChecked: @Model.IsChecked</li>
+    <li class="list-group-item">ExeType: @Model.ExeType</li>
+    <li class="list-group-item">Memo: @Model.Memo</li>
+    <li class="list-group-item">Country: @Model.Country</li>
+</ul>
+
+
+<div class="mt-4">
+    <a asp-controller="TagHelper" asp-action="Index" >Return Index Page.</a>
+</div>
+

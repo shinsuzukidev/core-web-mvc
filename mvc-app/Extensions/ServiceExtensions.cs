@@ -37,6 +37,22 @@ namespace mvc_app.Extensions
         }
 
         /// <summary>
+        /// セッション設定
+        /// </summary>
+        public static void ConfigureSession(this IServiceCollection service)
+        {
+            service.AddDistributedMemoryCache();
+            service.AddSession(options => {
+                // IdleTimeout: 内容を破棄されることなくセッションがアイドル状態になっていることのできる最大時間を示します。 セッションへのアクセスがあるたびに、タイムアウトはリセットされます。 この設定はセッションの内容にのみ適用され、cookie には適用されません。 既定値は 20 分です。
+                options.IdleTimeout = TimeSpan.FromMinutes(60);　
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.MaxAge = TimeSpan.FromDays(30);
+            });
+        }
+
+        /// <summary>
         /// 設定ファイルを読込
         /// </summary>
         public static void ConfigureSettings(this IServiceCollection services) 

@@ -1,0 +1,99 @@
+﻿@model mvc_app.Models.TagHelper.RegisterViewModel
+@{
+    ViewData["Title"] = "TabIndex";
+}
+
+<h1>@ViewData["Title"] Page</h1>
+<hr />
+
+<div>
+    <!-- アンカー -->
+    <p class="badge bg-primary text-wrap fs-5 p-md-2">アンカー</p>
+    <p>
+        <a asp-action="">TagHelper- Index(action未設定)</a><br />
+        <a asp-controller="TagHelper" asp-action="Index">TagHelper- Index</a><br />
+        <a asp-controller="Movies" asp-action="Details" asp-route-id="2">Movies - Details (パラメータ) </a><br />
+        <a asp-controller="Movies" asp-action="Details" asp-route-id="2" asp-route-ppp="3">Movies - Details (パラメータ) </a><br />
+        @* <a asp-controller="Movies" asp-action="Details" asp-all-route-data="anchorParams">Movies - Details (パラメータ2) </a><br /> *@
+        <a asp-controller="TagHelper" asp-action="Index" asp-fragment="flagment">TagHelper- Index (フラグメント)</a><br />
+
+        <a asp-protocol="https" asp-host="microsoft.com" asp-controller="">microsoft.com</a>
+
+    </p>
+
+
+    <!-- 環境タグ 変数 --> 
+    <p class="badge bg-primary text-wrap fs-5 p-md-2">環境タグ</p>
+    <p>
+        <environment names="Development">
+            <strong>Development</strong>
+        </environment>
+        <environment names="Staging,Production">
+            <strong>Staging or Production</strong>
+        </environment>
+    </p>
+
+    <!-- form  -->
+    <p class="badge bg-primary text-wrap fs-5 p-md-2">フォーム</p>
+    <form asp-controller="TagHelper" asp-action="MyPostMessage" method="post">
+       <button asp-controller="TagHelper" asp-action="MyPostMessage" formmethod="post">Click(formaction)</button>
+       <button>click(button)</button>
+       <input type="submit" value="input_submit click!">
+    </form>
+    <hr />
+
+    <!-- form  -->
+    <form asp-controller="TagHelper" asp-action="MyPostMessage" method="post">
+@*         Name: <input asp-for=@Model.Name /><br />
+        Email: <input asp-for="Email" /><br />
+        Password: <input asp-for="Password" /><br />
+        Check: <input asp-for="@Model.IsChecked" />
+ *@
+
+        <div class="row">
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control form-control-sm" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="@Model.Email" class="control-label"></label>
+                    <input asp-for="@Model.Email" class="form-control form-control-sm" />
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="@Model.Password" class="control-label"></label>
+                    <input asp-for="@Model.Password" class="form-control form-control-sm" />
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="@Model.IsChecked" class="control-label"></label><br />
+                    <input type="checkbox" asp-for="@Model.IsChecked" class="form-check-input" />
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="@Model.Memo" class="control-label"></label>
+                    <textarea asp-for="@Model.Memo" class="form-control">Start aligned text on viewports sized SM (small) or wider.</textarea>
+                    <span asp-validation-for="@Model.Memo" class="text-danger"></span>
+                </div>
+
+                <!-- 選択リスト-->
+                <div class="form-group mt-2">
+                    <label asp-for="@Model.Country" class="control-label"></label><br />
+                    <select asp-for="@Model.Country" asp-items="@Model.Countries" class="form-select-sm"></select>
+                </div>
+
+
+                <!-- フォーム内で分ける場合、formactionもあるよ -->
+                <div class="form-group mt-4">
+                    <button type="submit" name="ExeType" value="regist">Register</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+</div>
