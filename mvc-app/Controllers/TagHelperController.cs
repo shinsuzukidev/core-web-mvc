@@ -3,9 +3,11 @@ using mvc_app.Models.TagHelper;
 using Microsoft.AspNetCore.Http;
 using mvc_app.Extensions;
 using mvc_app.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc_app.Controllers
 {
+    [Authorize]
     public class TagHelperController : Controller
     {
         public IActionResult Index()

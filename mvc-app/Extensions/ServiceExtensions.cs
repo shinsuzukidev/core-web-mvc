@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Configuration;
 using mvc_app.Sample.Config;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc_app.Extensions
 {
@@ -18,7 +20,7 @@ namespace mvc_app.Extensions
         {
             service.AddControllersWithViews(options =>
             {
-                // CSRF対策
+                // CSRF対策(POST,PUT,PATCH,DELETEのHTTPメソッドのみTokenが作成される)
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).
             AddRazorOptions(options =>
@@ -77,5 +79,33 @@ namespace mvc_app.Extensions
             //var appWebSettings = config.Get<AppWebSettings>();
 
         }
+
+        /// <summary>
+        /// 認証設定
+        /// </summary>
+        public static void ConfigureAuthentication(this IServiceCollection services)
+        {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie((options) =>
+                {
+                    options.Cookie.Name = "my_cookie";
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.MaxAge = TimeSpan.FromDays(30);
+                    options.SlidingExpiration = true;
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.IsEssential = true;
+                });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .Build();
+            //});
+        }
+
     }
 }

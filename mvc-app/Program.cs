@@ -24,7 +24,7 @@ namespace mvc_app
             builder.Services.ConfigureSettings();   // 設定ファイル  
             builder.Services.ConfigureMvc();        // mvcの設定
             builder.Services.ConfigureSession();    // sessionの設定
-
+            builder.Services.ConfigureAuthentication(); // 認証の設定
 
 
             // DI
@@ -58,6 +58,7 @@ namespace mvc_app
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();
