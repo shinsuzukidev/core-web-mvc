@@ -101,7 +101,9 @@
 
                     @foreach (var(index, city) in @Model.Cities.Select((c, index) => (index, c)))
                     {
-                        <input type="radio" id="city_@index" name="City" value="@city.Value" class="form-select-sm" />
+                        var selctedChk = Model.City == city.Value ? "checked" : "";
+
+                        <input type="radio" id="city_@index" name="City" value="@city.Value" class="form-select-sm" @selctedChk />
                         <label for="city_@index" class="control-label">@city.Text</label>
                     }
                     <span asp-validation-for="@Model.City" class="text-danger"></span>

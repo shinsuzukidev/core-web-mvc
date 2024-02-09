@@ -48,7 +48,7 @@ namespace mvc_app.Models.TagHelper
 
         [Required(ErrorMessage = "必須項目です")]
         [DisplayName("都市")]
-        public string? City { get; set; } // = "CA";
+        public string? City { get; set; } = "OK";
         public List<SelectListItem> Cities { get; } = new List<SelectListItem>()
         {
             new SelectListItem { Value = "TK", Text = "tokyo" },
