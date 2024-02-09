@@ -94,6 +94,12 @@
             </div>
         </div>
     </form>
-
-
 </div>
+
+<!-- 下記をコメントするとJSの検証は実行されない -->
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
