@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using mvc_app.Models;
 
 namespace mvc_app.Models.TagHelper
 {
@@ -38,16 +40,32 @@ namespace mvc_app.Models.TagHelper
         //public IEnumerable<string> Country { get; set; } = new string[]{ "CA", "US" };    // こちらだと複数選択可能
         public List<SelectListItem> Countries { get; }  = new List<SelectListItem>() 
         {
-            new SelectListItem { Value = "", Text = "NO-Select" },
+            new SelectListItem { Value = "", Text = "select-country" },
             new SelectListItem { Value = "MX", Text = "Mexico" },
             new SelectListItem { Value = "CA", Text = "Canada" },
             new SelectListItem { Value = "US", Text = "USA"  },
         };
 
+        [Required(ErrorMessage = "必須項目です")]
+        [DisplayName("都市")]
+        public string? City { get; set; } // = "CA";
+        public List<SelectListItem> Cities { get; } = new List<SelectListItem>()
+        {
+            new SelectListItem { Value = "TK", Text = "tokyo" },
+            new SelectListItem { Value = "OK", Text = "osaka" },
+            new SelectListItem { Value = "FO", Text = "fukuoka"  },
+        };
+
+
 
         [HiddenInput]
         public string? ExeType { get; set; }
 
+
+
+        [Required(ErrorMessage = "必須項目です")]
+        [DisplayName("国_enum")]
+        public EnumDefines.CountryEnum EnumCountry { get; set; }
     }
 }
 
