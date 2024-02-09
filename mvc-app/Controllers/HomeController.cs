@@ -20,6 +20,7 @@ namespace mvc_app.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            //throw new Exception("myerror!");
             return View();
         }
 
